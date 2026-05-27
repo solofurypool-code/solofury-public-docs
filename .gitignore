@@ -1,0 +1,29 @@
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local config (should never be committed)
+config.local.*
+.env
+.env.local
+*.secret
+secrets/
+private/
+
+# Build artifacts (none for now, this is docs-only repo)
+node_modules/
+dist/
+build/
