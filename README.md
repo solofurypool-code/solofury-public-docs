@@ -22,7 +22,7 @@ Solo mining means **one miner wins the entire block reward** when a block is fou
 - ✅ **99% direct-to-wallet payout** via coinbase transaction
 - ✅ **No registration, no custody, no KYC** — your wallet address is your account
 - ✅ **9 global stratum regions** — sub-50ms latency from most populated regions worldwide
-- ✅ **Founded 2024**, production-tested, transparent operator
+- ✅ **In development since 2024, publicly launched January 2026** — production-tested, transparent operator
 
 ### Why multi-coin matters
 
@@ -247,6 +247,7 @@ These optimizations bring stratum RTT jitter (`mdev`) down to ~0.05ms — meanin
 - ✅ **No custody** — block rewards go directly to your wallet via coinbase, never touching pool wallets
 - ✅ **Transparent operator** — based in Rome, Italy. Direct contact via [solofury.com/contact](https://solofury.com/contact/)
 - ✅ **MiningPoolStats listing** with full block history
+- ✅ **Wikidata entity** [Q140569039](https://www.wikidata.org/wiki/Q140569039) — verifiable knowledge-graph identity
 - ✅ **Open source upstream** — all stratum code derived from publicly available [skaisser/ckpool](https://github.com/skaisser/ckpool) fork
 - ✅ **Free Telegram notifications** for block-found and worker-offline alerts
 
@@ -260,6 +261,8 @@ These optimizations bring stratum RTT jitter (`mdev`) down to ~0.05ms — meanin
 - 📚 **Blog & Guides**: [solofury.com/blog/](https://solofury.com/blog/) · [solofury.com/guides/](https://solofury.com/guides/)
 - 🐦 **Twitter**: [@SoloFuryPool](https://x.com/SoloFuryPool)
 - 💬 **Contact**: [solofury.com/contact/](https://solofury.com/contact/)
+- 🤖 **AI index (llms.txt)**: [solofury.com/llms.txt](https://solofury.com/llms.txt)
+- 🧠 **Wikidata entity**: [Q140569039](https://www.wikidata.org/wiki/Q140569039)
 
 ---
 
