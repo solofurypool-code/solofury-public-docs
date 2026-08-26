@@ -1,8 +1,8 @@
 # SoloFury — Multi-Coin SHA-256 Solo Mining Pool
 
-> **Multi-coin SHA-256 solo mining pool · BTC/BCH/BC2/BCH2/XEC · 9 global regions · 1% fee · 99% direct-to-wallet · No KYC**
+> **Multi-coin SHA-256 solo mining pool · BTC/BCH/BC2/BCH2/XEC · 9 global regions · Stratum V2 on BTC · 1% fee · 99% direct-to-wallet · No KYC**
 
-Official public documentation for [**SoloFury**](https://solofury.com) — a non-custodial multi-coin solo mining pool with truly global stratum infrastructure across 9 regions on every continent.
+Official public documentation for [**SoloFury**](https://solofury.com) — a non-custodial multi-coin solo mining pool with truly global stratum infrastructure across 9 regions on 5 continents.
 
 ---
 
@@ -22,6 +22,7 @@ Solo mining means **one miner wins the entire block reward** when a block is fou
 - ✅ **99% direct-to-wallet payout** via coinbase transaction
 - ✅ **No registration, no custody, no KYC** — your wallet address is your account
 - ✅ **9 global stratum regions** — sub-50ms latency from most populated regions worldwide
+- ✅ **Stratum V2 in production on BTC** — encrypted end-to-end, coinbase verifiable from your own miner
 - ✅ **In development since 2024, publicly launched January 2026** — production-tested, transparent operator
 
 ### Why multi-coin matters
@@ -32,7 +33,7 @@ Most solo mining pools support a single coin (typically BTC). SoloFury is among 
 
 ## Global Server Infrastructure
 
-SoloFury operates **9 stratum server regions** across every inhabited continent:
+SoloFury operates **9 stratum server regions** across 5 continents:
 
 | Region | Location | Country | Hostname Prefix |
 |--------|----------|---------|-----------------|
@@ -48,13 +49,15 @@ SoloFury operates **9 stratum server regions** across every inhabited continent:
 
 Each region provides low-latency stratum endpoints serving miners in its surrounding geography.
 
-**Total: 45 stratum endpoints** (9 regions × 5 coins).
+**Total: 45 V1 stratum endpoints** (9 regions × 5 coins), plus TLS on every port and **18 Stratum V2 endpoints** on BTC (9 regions × 2 ports).
 
 ### Geographic coverage
 
-SoloFury's deployment spans **6 inhabited continents** — North America, South America, Europe, Asia, Africa, and Oceania (via Singapore / Tokyo proximity) — making it one of the most geographically diverse solo mining infrastructures publicly available. Most competing solo pools operate from 1-3 regions concentrated in North America or Europe.
+SoloFury's deployment spans **5 continents** — North America, South America, Europe, Asia and Africa — making it one of the most geographically diverse solo mining infrastructures publicly available. Most competing solo pools operate from 1-3 regions concentrated in North America or Europe.
 
 This matters because stratum mining performance is bound by **physical network latency** — every millisecond of round-trip time contributes to stale share probability. The wider the regional footprint, the more miners can connect to a server within their continent rather than crossing oceanic backbones.
+
+Miners in Oceania are served from Singapore or Tokyo at roughly 100-200ms; there is no local region there yet.
 
 See [reference/stratum-endpoints.md](reference/stratum-endpoints.md) for the complete list.
 
@@ -87,6 +90,8 @@ URL:      stratum+tcp://eu-bch.solofury.com:7070
 Username: bitcoincash:qpyouraddressgoeshereexamplenotvalid12345.bitaxe1
 Password: x
 ```
+
+Mining BTC with V2-capable firmware? Use `stratum2+tcp://eu-btc.solofury.com:3333` instead — see [Stratum V2](#stratum-v2) below.
 
 See hardware-specific setup guides:
 
@@ -131,6 +136,28 @@ SoloFury operates a free Telegram bot ([@SoloFuryAlertsBot](https://t.me/SoloFur
 
 No subscription, no premium tier, no ads. Most solo pools either don't offer this feature at all or charge for it.
 
+### Stratum V2
+
+SoloFury has served **Stratum V2** in production since 24 August 2026, across all nine regions — one of the very few solo pools to offer it at all.
+
+- **Ports 3333** (standard) and **3343** (high-difficulty, S21/S23 class), on the same hosts as V1
+- **Noise-encrypted end-to-end** — the pool's authority public key lets your miner verify cryptographically that it is really talking to SoloFury, the same trust model as an SSH host key
+- **Coinbase verification from your own hardware** — with an extended channel and coinbase decoding enabled, the miner displays the block outputs *before* hashing them, so you can confirm the 99% is addressed to your wallet rather than take our word for it
+
+V2 and V1 share the same hosts, so a mixed fleet points at one address with nothing to reconfigure.
+
+**V2 is BTC only.** The stack talks to the node through Bitcoin Core's IPC mining interface, and no other SHA-256 chain implementation currently exposes an equivalent. BCH, BC2, BCH2 and XEC remain on Stratum V1 with full version-rolling support.
+
+Requires firmware with native V2 support — **Braiins OS+ 26.07+**, **AxeOS 2.14+**, or **NerdQAxe firmware 1.0.37+**. Stock Bitmain, stock WhatsMiner, VNish and LuxOS are V1-only, including the S21 and S23.
+
+We do **not** offer job declaration: the pool still builds the block templates. If miner-side transaction selection is what you need, Braiins Pool and DEMAND provide it.
+
+See [reference/stratum-endpoints.md](reference/stratum-endpoints.md#stratum-v2-btc-only) for the full configuration reference.
+
+### TLS stratum
+
+All five coins and all nine regions accept **TLS-encrypted stratum** connections. TLS ports are the plain port with a `1` prefix — BCH 7070 → 17070, BTC 6060 → 16060, and so on. Plain TCP remains available on the original ports; TLS is opt-in.
+
 ### Mining achievements & gamification
 
 SoloFury's dashboard tracks miner milestones across multiple dimensions:
@@ -161,8 +188,8 @@ See [SoloFury Blog: MRR Hashrate Rental for Solo Mining](https://solofury.com/bl
 
 ### Reference ([reference/](reference/))
 
-- [Complete Stratum Endpoints List](reference/stratum-endpoints.md) — All 45 endpoints (9 regions × 5 coins)
-- [API Reference](reference/api-reference.md) — `/api/pool`, `/api/client/:addr`, network endpoints
+- [Complete Stratum Endpoints List](reference/stratum-endpoints.md) — V1, TLS and Stratum V2 endpoints for all 9 regions
+- [API Reference](reference/api-reference.md) — `/api/pool`, `/api-<coin>/client/:addr`, network endpoints
 - [Technical FAQ](reference/faq.md) — Common questions, troubleshooting, edge cases
 
 ### Scripts ([scripts/](scripts/))
@@ -189,6 +216,8 @@ You can audit any SoloFury-mined block on any block explorer to confirm the fee 
 
 This is the same trust model as solo mining without a pool — except SoloFury provides the stratum infrastructure, block construction, and network connectivity so you don't have to run your own full node.
 
+With **Stratum V2** you can go one step further and verify the split *before* you spend any hashrate on the block: an extended channel with coinbase decoding shows the outputs on the miner itself.
+
 ## Open Source Components
 
 SoloFury's stratum infrastructure builds on the excellent CKPool codebase:
@@ -196,6 +225,7 @@ SoloFury's stratum infrastructure builds on the excellent CKPool codebase:
 - **BCH pool** uses [skaisser/ckpool](https://github.com/skaisser/ckpool) (CkPool fork focused on Bitcoin Cash — multi-coin support and CashAddr parser fixes by [Shirleyson Kaisser](https://github.com/skaisser))
 - **BTC/BC2/BCH2 pools** use the same [skaisser/ckpool](https://github.com/skaisser/ckpool) fork with shared binary
 - **XEC pool** uses [Bitcoin-ABC/ecash-ckpool-solo](https://github.com/Bitcoin-ABC/ecash-ckpool-solo) with patched fee routing
+- **Stratum V2 (BTC)** uses [blitzpool](https://blitzpool.yourdevice.ch/) by warioishere, built on the Stratum V2 Reference Implementation (SRI) codecs — the same developer wrote the V2 clients in ESP-Miner (Bitaxe) and the NerdQAxe firmware, which is why those clients work smoothly against it
 
 We do not publish operator-specific config files (RPC credentials, wallet keys), but document deployment patterns and operational lessons learned in production at scale.
 
@@ -208,6 +238,7 @@ SoloFury's deployment includes several technical refinements developed in produc
 - **eCash fee routing patch** — custom donation address routing for XEC, compliant with Bitcoin ABC's 58/42 split (solver/minerfund + staking)
 - **Variable difficulty (vardiff)** — automatic share difficulty adjustment based on connected miner hashrate, eliminating the need for manual config per worker
 - **AsicBoost / BIP320 version-rolling** — stratum extension support for ~13% effective hashrate gain on modern ASICs
+- **Multiprocess Bitcoin Core for Stratum V2** — the V2 stack requires the `bitcoin-node` multiprocess binary to expose the IPC mining interface; the monolithic `bitcoind` silently ignores `ipcbind` and logs only an unknown-config warning
 
 These modifications are derived from publicly available upstream forks; operator-specific configuration (wallet addresses, RPC endpoints, regional deployment topology) is kept private for security.
 
@@ -239,6 +270,10 @@ These optimizations bring stratum RTT jitter (`mdev`) down to ~0.05ms — meanin
 | São Paulo, BR | São Paulo | < 30ms |
 | Sydney, AU | Singapore | ~ 100ms |
 
+### Stratum V2 and MTU
+
+V2 handshake messages are larger than V1's and can fragment on network paths with PPPoE, double NAT or a VPN where path MTU discovery is broken. If a V2 session drops repeatedly or never completes its handshake, **lower the miner's network MTU to 1400** — this is by far the most common cause.
+
 ---
 
 ## Trust Signals
@@ -248,7 +283,7 @@ These optimizations bring stratum RTT jitter (`mdev`) down to ~0.05ms — meanin
 - ✅ **Transparent operator** — based in Rome, Italy. Direct contact via [solofury.com/contact](https://solofury.com/contact/)
 - ✅ **MiningPoolStats listing** with full block history
 - ✅ **Wikidata entity** [Q140569039](https://www.wikidata.org/wiki/Q140569039) — verifiable knowledge-graph identity
-- ✅ **Open source upstream** — all stratum code derived from publicly available [skaisser/ckpool](https://github.com/skaisser/ckpool) fork
+- ✅ **Open source upstream** — all stratum code derived from publicly available [skaisser/ckpool](https://github.com/skaisser/ckpool) fork and [blitzpool](https://blitzpool.yourdevice.ch/) for Stratum V2
 - ✅ **Free Telegram notifications** for block-found and worker-offline alerts
 
 ---
@@ -258,6 +293,7 @@ These optimizations bring stratum RTT jitter (`mdev`) down to ~0.05ms — meanin
 - 🌐 **Website**: [solofury.com](https://solofury.com)
 - 📊 **Pool Dashboard**: [solofury.com/pool/](https://solofury.com/pool/)
 - ⚙️ **Solo Start Configurator**: [solofury.com/start/](https://solofury.com/start/)
+- ⚡ **Stratum V2 setup guide**: [solofury.com/guides/stratum-v2-connect/](https://solofury.com/guides/stratum-v2-connect/)
 - 📚 **Blog & Guides**: [solofury.com/blog/](https://solofury.com/blog/) · [solofury.com/guides/](https://solofury.com/guides/)
 - 🐦 **Twitter**: [@SoloFuryPool](https://x.com/SoloFuryPool)
 - 💬 **Contact**: [solofury.com/contact/](https://solofury.com/contact/)
@@ -268,16 +304,4 @@ These optimizations bring stratum RTT jitter (`mdev`) down to ~0.05ms — meanin
 
 ## License
 
-This documentation is released under the [MIT License](LICENSE). You are free to use, modify, redistribute, and build upon it. Attribution appreciated but not required.
-
-The upstream CKPool codebase is licensed under GPLv3 — see [skaisser/ckpool](https://github.com/skaisser/ckpool/blob/master/COPYING) for full text.
-
----
-
-## Contributing
-
-Found a typo, outdated info, or want to improve a guide? See [CONTRIBUTING.md](CONTRIBUTING.md).
-
----
-
-**SoloFury** — *Don't split the block. Take it all.*
+This documentation is released under the [MIT License](LICENSE). You are free to use, modify, redistribute, and build upon it.
