@@ -6,7 +6,7 @@
 
 ### What is SoloFury?
 
-SoloFury is a multi-coin SHA-256 solo mining pool. Unlike traditional pools that share block rewards among many miners, solo mining means the miner who finds the block keeps the entire reward. SoloFury supports 5 coins (BTC, BCH, BC2, BCH2, XEC) across 9 global regions with a 1% pool fee.
+SoloFury is a multi-coin SHA-256 solo mining pool. Unlike traditional pools that share block rewards among many miners, solo mining means the miner who finds the block keeps the entire reward. SoloFury supports 6 coins (BTC, BCH, BC2, BCH2, XEC, DGB) across 9 global regions with a 1% pool fee.
 
 ### How is SoloFury different from CKPool, Solo CK, or 2Miners Solo?
 
@@ -112,7 +112,7 @@ A URL that looks correct but omits the key fails **silently** on Braiins.
 
 V1 and V2 run on the same hosts, so a mixed fleet can point at one address with nothing to reconfigure.
 
-Full reference: [stratum-endpoints.md](stratum-endpoints.md#stratum-v2-btc-only) · Step-by-step guide: [solofury.com/guides/stratum-v2-connect/](https://solofury.com/guides/stratum-v2-connect/)
+Full reference: [stratum-endpoints.md](stratum-endpoints.md#stratum-v2) · Step-by-step guide: [solofury.com/guides/stratum-v2-connect/](https://solofury.com/guides/stratum-v2-connect/)
 
 ### Which firmware supports Stratum V2?
 
@@ -190,7 +190,7 @@ For solo mining the practical V2 gains are encryption, lower latency and the coi
 
 Yes, in two independent ways.
 
-**TLS** is available on all five coins and all nine regions. TLS ports are the plain port with a `1` prefix:
+**TLS** is available on all six coins and all nine regions. TLS ports are the plain port with a `1` prefix:
 
 | Coin | Plain | TLS |
 |------|-------|-----|
@@ -304,7 +304,7 @@ No. Luck on SoloFury is **personal, not pool-round**: it resets on blocks found 
 
 ### BC2 (Bitcoin II)
 
-Most variable difficulty of all 5 coins. BC2 network hashrate fluctuates 5×-100× depending on hashrate arrival/departure. When difficulty drops, solo mining odds dramatically improve for hours-to-days.
+Most variable difficulty of all 6 coins. BC2 network hashrate fluctuates 5×-100× depending on hashrate arrival/departure. When difficulty drops, solo mining odds dramatically improve for hours-to-days.
 
 See [SoloFury Blog: BC2 Difficulty Drop Window](https://solofury.com/blog/) for tactics.
 

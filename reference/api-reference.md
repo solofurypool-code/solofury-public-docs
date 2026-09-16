@@ -121,7 +121,7 @@ curl -s https://solofury.com/api-btc/client/bc1qexampleaddress...
 | `regionSourceName` | string | e.g. `Frankfurt SV2` |
 | `regionStratum` | string | hostname the worker is connected to |
 
-**Stratum V2 workers** carry `protocol: "SV2"`, `availableIn: "sv2"` and `channelCount`. V2 is BTC only — see [stratum-endpoints.md](stratum-endpoints.md#stratum-v2-btc-only).
+**Stratum V2 workers** carry `protocol: "SV2"`, `availableIn: "sv2"` and `channelCount`. V2 runs on BTC and BCH — see [stratum-endpoints.md](stratum-endpoints.md#stratum-v2).
 
 Example — list workers and their protocol:
 

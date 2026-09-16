@@ -1,6 +1,6 @@
 # SoloFury Stratum Endpoints — Complete Reference
 
-> All 45 V1 stratum endpoints (9 global regions × 5 coins), plus TLS on every port and 18 Stratum V2 endpoints on BTC.
+> All 54 V1 stratum endpoints (9 global regions × 6 coins), plus TLS on every port and 36 Stratum V2 endpoints on BTC and BCH.
 
 ## Hostname pattern
 
@@ -27,7 +27,7 @@ Each coin has **3 ports** for stratum failover. Configure your miner with all 3 
 
 **TLS ports** are the plain port with a `1` prefix: BCH 7070 → `17070`, BTC 6060 → `16060`, BC2 8080 → `18080`, BCH2 8585 → `18585`, XEC 9090 → `19090`. See [TLS stratum](#tls-stratum) below.
 
-**Stratum V2** on BTC uses dedicated ports `3333` and `3343`. See [Stratum V2](#stratum-v2-btc-only) below.
+**Stratum V2** on BTC uses dedicated ports `3333` and `3343`; on BCH ports `7333` and `7343`. See [Stratum V2](#stratum-v2) below.
 
 ## Complete endpoint list
 
@@ -166,7 +166,7 @@ This protects against:
 
 ## TLS stratum
 
-✅ **SoloFury supports TLS-encrypted stratum** on all five coins and all nine regions, live since July 2026.
+✅ **SoloFury supports TLS-encrypted stratum** on all six coins and all nine regions, live since July 2026.
 
 TLS ports are the plain port with a `1` prefix:
 

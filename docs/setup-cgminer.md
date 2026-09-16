@@ -94,7 +94,7 @@ Run:
 cgminer --config cgminer.conf
 ```
 
-## Stratum URLs for all 5 coins
+## Stratum URLs for all 6 coins
 
 ```bash
 # BCH (Bitcoin Cash) — port 7070-7072
