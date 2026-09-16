@@ -23,7 +23,7 @@ Solo mining means **one miner wins the entire block reward** when a block is fou
 - ✅ **99% direct-to-wallet payout** via coinbase transaction
 - ✅ **No registration, no custody, no KYC** — your wallet address is your account
 - ✅ **9 global stratum regions** — sub-50ms latency from most populated regions worldwide
-- ✅ **Stratum V2 in production on BTC** — encrypted end-to-end, coinbase verifiable from your own miner
+- ✅ **Stratum V2 in production on BTC and BCH** — encrypted end-to-end, coinbase verifiable from your own miner
 - ✅ **In development since 2024, publicly launched January 2026** — production-tested, transparent operator
 
 ### Why multi-coin matters
@@ -50,7 +50,7 @@ SoloFury operates **9 stratum server regions** across 5 continents:
 
 Each region provides low-latency stratum endpoints serving miners in its surrounding geography.
 
-**Total: 45 V1 stratum endpoints** (9 regions × 5 coins), plus TLS on every port and **18 Stratum V2 endpoints** on BTC (9 regions × 2 ports).
+**Total: 54 V1 stratum endpoints** (9 regions × 6 coins), plus TLS on every port and **36 Stratum V2 endpoints** on BTC and BCH (9 regions × 2 chains × 2 ports).
 
 ### Geographic coverage
 
@@ -68,7 +68,7 @@ See [reference/stratum-endpoints.md](reference/stratum-endpoints.md) for the com
 
 ### 1. Choose your coin
 
-Pick any of the 5 supported SHA-256 cryptocurrencies. With Bitaxe-class hardware (~1 TH/s), lower-difficulty chains (BCH, BC2, BCH2, XEC) give realistic odds of finding a block in days-weeks. BTC requires industrial hashrate to be statistically meaningful.
+Pick any of the 6 supported SHA-256 cryptocurrencies. With Bitaxe-class hardware (~1 TH/s), lower-difficulty chains (DGB, BCH2, BC2, XEC, BCH) give realistic odds of finding a block in hours-weeks. BTC requires industrial hashrate to be statistically meaningful.
 
 ### 2. Choose your nearest region
 
@@ -153,11 +153,11 @@ Requires firmware with native V2 support — **Braiins OS+ 26.07+**, **AxeOS 2.1
 
 We do **not** offer job declaration: the pool still builds the block templates. If miner-side transaction selection is what you need, Braiins Pool and DEMAND provide it.
 
-See [reference/stratum-endpoints.md](reference/stratum-endpoints.md#stratum-v2-btc-only) for the full configuration reference.
+See [reference/stratum-endpoints.md](reference/stratum-endpoints.md#stratum-v2) for the full configuration reference.
 
 ### TLS stratum
 
-All five coins and all nine regions accept **TLS-encrypted stratum** connections. TLS ports are the plain port with a `1` prefix — BCH 7070 → 17070, BTC 6060 → 16060, and so on. Plain TCP remains available on the original ports; TLS is opt-in.
+All six coins and all nine regions accept **TLS-encrypted stratum** connections. TLS ports are the plain port with a `1` prefix — BCH 7070 → 17070, BTC 6060 → 16060, and so on. Plain TCP remains available on the original ports; TLS is opt-in.
 
 ### Mining achievements & gamification
 
@@ -226,7 +226,7 @@ SoloFury's stratum infrastructure builds on the excellent CKPool codebase:
 - **BCH pool** uses [skaisser/ckpool](https://github.com/skaisser/ckpool) (CkPool fork focused on Bitcoin Cash — multi-coin support and CashAddr parser fixes by [Shirleyson Kaisser](https://github.com/skaisser))
 - **BTC/BC2/BCH2 pools** use the same [skaisser/ckpool](https://github.com/skaisser/ckpool) fork with shared binary
 - **XEC pool** uses [Bitcoin-ABC/ecash-ckpool-solo](https://github.com/Bitcoin-ABC/ecash-ckpool-solo) with patched fee routing
-- **Stratum V2 (BTC)** uses [blitzpool](https://blitzpool.yourdevice.ch/) by warioishere, built on the Stratum V2 Reference Implementation (SRI) codecs — the same developer wrote the V2 clients in ESP-Miner (Bitaxe) and the NerdQAxe firmware, which is why those clients work smoothly against it
+- **Stratum V2 (BTC)** uses [blitzpool](https://blitzpool.yourdevice.ch/) by warioishere; **Stratum V2 (BCH) is SoloFury's own implementation**, built on the Stratum V2 Reference Implementation (SRI) codecs — the same developer wrote the V2 clients in ESP-Miner (Bitaxe) and the NerdQAxe firmware, which is why those clients work smoothly against it
 
 We do not publish operator-specific config files (RPC credentials, wallet keys), but document deployment patterns and operational lessons learned in production at scale.
 
