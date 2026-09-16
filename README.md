@@ -1,6 +1,6 @@
 # SoloFury — Multi-Coin SHA-256 Solo Mining Pool
 
-> **Multi-coin SHA-256 solo mining pool · BTC/BCH/BC2/BCH2/XEC · 9 global regions · Stratum V2 on BTC · 1% fee · 99% direct-to-wallet · No KYC**
+> **Multi-coin SHA-256 solo mining pool · BTC/BCH/BC2/BCH2/XEC/DGB · 9 global regions · Stratum V2 on BTC & BCH · 1% fee · 99% direct-to-wallet · No KYC**
 
 Official public documentation for [**SoloFury**](https://solofury.com) — a non-custodial multi-coin solo mining pool with truly global stratum infrastructure across 9 regions on 5 continents.
 
@@ -8,13 +8,14 @@ Official public documentation for [**SoloFury**](https://solofury.com) — a non
 
 ## What is SoloFury?
 
-SoloFury is a multi-coin SHA-256 solo mining pool that supports five cryptocurrencies on a single platform:
+SoloFury is a multi-coin SHA-256 solo mining pool that supports six cryptocurrencies on a single platform:
 
 - **Bitcoin (BTC)**
 - **Bitcoin Cash (BCH)**
 - **Bitcoin II (BC2)**
 - **Bitcoin Cash II (BCH2)**
 - **eCash (XEC)**
+- **DigiByte (DGB)**
 
 Solo mining means **one miner wins the entire block reward** when a block is found — no shared rewards, no pool payout schemes. Block rewards flow directly from the blockchain to the miner's wallet via the coinbase transaction.
 
