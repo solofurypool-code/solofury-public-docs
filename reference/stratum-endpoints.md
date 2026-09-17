@@ -190,44 +190,34 @@ Plain TCP remains available on the original ports — TLS is opt-in, not mandato
 
 ---
 
-## Stratum V2 (BTC only)
+## Stratum V2
 
-SoloFury has served **Stratum V2** in production since 24 August 2026, across all nine regions.
+SoloFury serves **Stratum V2** in production on **Bitcoin** and **Bitcoin Cash**, across all nine regions.
 
 V1 and V2 run on the same hosts but on dedicated ports. The pool detects which protocol your miner speaks and answers accordingly, so a mixed fleet can point at one address with nothing to reconfigure.
 
 Stratum V2 is encrypted end-to-end with the Noise protocol — the same cryptographic foundation as WireGuard — so it needs no separate TLS port.
 
-### Ports
+| Chain | Live since | Standard port | High-diff port | Stack |
+|-------|-----------|---------------|----------------|-------|
+| BTC | 24 August 2026 | `3333` | `3343` | [blitzpool](https://blitzpool.yourdevice.ch/) by warioishere |
+| BCH | 5 September 2026 | `7333` | `7343` | SoloFury's own implementation |
 
-| Port | Use |
-|------|-----|
-| `3333` | Standard — Bitaxe, NerdQAxe, most machines |
-| `3343` | High difficulty — S21 / S23 class |
+> ⚠️ **The authority public key is different on each chain.** Using the BTC key on BCH fails the handshake — silently, on some firmware.
 
-### Scheme
+---
 
+### Bitcoin (BTC)
+
+**Scheme**
 ```
 stratum2+tcp://<region->btc.solofury.com:3333
 ```
 
-### Authority public key
-
-Identical on all nine regions:
-
+**Authority public key** — identical on all nine regions:
 ```
 9cLif4sCxvAz7FBP7GPvYG8Mv586ZhdgNbn3f4PsrM56gboSZEp
 ```
-
-Your miner uses this to verify cryptographically that the endpoint answering on port 3333 is really SoloFury — the same trust model as an SSH host key. **Where it goes depends on the firmware:**
-
-- **AxeOS (Bitaxe) and NerdQAxe** — dedicated `SV2 Authority Pubkey` field
-- **Braiins OS+ (Antminer)** — appended to the URL path:
-  `stratum2+tcp://eu-btc.solofury.com:3333/9cLif4sCxvAz7FBP7GPvYG8Mv586ZhdgNbn3f4PsrM56gboSZEp`
-
-A URL that looks correct but omits the key fails silently on Braiins.
-
-### V2 endpoints — all nine regions
 
 | Region | Standard | High-diff |
 |--------|----------|-----------|
@@ -241,23 +231,77 @@ A URL that looks correct but omits the key fails silently on Braiins.
 | 🇸🇬 Singapore (Asia SE) | `stratum2+tcp://asia-btc.solofury.com:3333` | `:3343` |
 | 🇯🇵 Tokyo (Asia East) | `stratum2+tcp://jp-btc.solofury.com:3333` | `:3343` |
 
-### Firmware requirements
+---
 
-Stratum V2 is a firmware capability — the ASIC never changes. As of August 2026, three firmware families implement it natively:
+### Bitcoin Cash (BCH)
 
-| Firmware | Hardware | Minimum version |
-|----------|----------|-----------------|
-| Braiins OS+ | Antminer S9 → S21 XP | 26.07 recommended |
-| AxeOS | Bitaxe (all models) | 2.14.0 |
-| NerdQAxe firmware | NerdAxe, NerdQAxe+/++, NerdOCTAxe | 1.0.37 |
+Live since **5 September 2026**. Both **extended** and **standard** channels are supported since 7 September 2026 — standard channels are what Braiins OS+ uses.
 
-**Stock Bitmain, stock WhatsMiner, VNish, LuxOS and Canaan firmware are V1-only** — including the S21 and S23. Some builds expose a V2-looking setting that never negotiates a real session, which is worse than offering nothing: the miner looks configured while quietly running V1.
+**Scheme**
+```
+stratum2+tcp://<region->bch.solofury.com:7333
+```
 
-Older V1 hardware can reach a V2 pool through the SRI Translation Proxy, which gives encryption without job declaration.
+**Authority public key** — identical on all nine regions:
+```
+9c5s3n4RzRrDhzMBr3iSJsUfreSLPGiHkQyyzJjYAVWK9YWaZf7
+```
 
-### Why BTC only
+| Region | Standard | High-diff |
+|--------|----------|-----------|
+| 🇺🇸 Atlanta (USA East) | `stratum2+tcp://bch.solofury.com:7333` | `:7343` |
+| 🇺🇸 Seattle (USA West) | `stratum2+tcp://pnw-bch.solofury.com:7333` | `:7343` |
+| 🇩🇪 Frankfurt (EU) | `stratum2+tcp://eu-bch.solofury.com:7333` | `:7343` |
+| 🇬🇧 London (UK) | `stratum2+tcp://uk-bch.solofury.com:7333` | `:7343` |
+| 🇮🇱 Tel Aviv (Middle East) | `stratum2+tcp://me-bch.solofury.com:7333` | `:7343` |
+| 🇿🇦 Johannesburg (Africa) | `stratum2+tcp://afr-bch.solofury.com:7333` | `:7343` |
+| 🇧🇷 São Paulo (LATAM) | `stratum2+tcp://lat-bch.solofury.com:7333` | `:7343` |
+| 🇸🇬 Singapore (Asia SE) | `stratum2+tcp://asia-bch.solofury.com:7333` | `:7343` |
+| 🇯🇵 Tokyo (Asia East) | `stratum2+tcp://jp-bch.solofury.com:7333` | `:7343` |
 
-The V2 stack talks to the node through Bitcoin Core's IPC mining interface. No other SHA-256 chain implementation currently exposes an equivalent — not Bitcoin Cash Node, not Bitcoin ABC, not the BC2 or BCH2 daemons. BCH, BC2, BCH2 and XEC remain on Stratum V1 with full version-rolling support on the ports listed above.
+All nine endpoints verified reachable on port 7333 (TCP connect test, 17 September 2026).
+
+**Version rolling (BIP320)** is fully enabled on BCH — unlike some multi-chain SV2 implementations that disable it.
+
+---
+
+### How Stratum V2 works on Bitcoin Cash
+
+Stratum V2 on Bitcoin Cash is implemented **natively in the pool engine**. The protocol layer — Noise handshake, channels, binary jobs — is built into the same software that already serves SV1 connections, and it feeds from the BCH node using block templates and block notifications: the same sources SV1 uses.
+
+There is **no translation proxy, no node patch, and no dependency on Bitcoin Core's IPC interface**. That interface only serves the Job Declaration path, where an external proxy proposes the transaction set — a path SoloFury does not offer on either chain.
+
+SV1 and SV2 share a single coinbase construction path, verified by comparing byte-for-byte the blocks mined under both protocols from the same miner.
+
+---
+
+### Why not the other chains
+
+BC2, BCH2 and XEC remain on **Stratum V1**, with full version-rolling support on the ports listed above. The approach used for BCH is not chain-specific: what a pool-side SV2 server needs is a block template and a new-block notification, both of which those daemons provide. Extending V2 to them is an engineering question, not a protocol limitation.
+
+**Job Declaration is not offered on BCH.** The pool builds the template; the miner verifies it through the extended channel. For solo mining the relevant guarantee is payout verification, not transaction selection.
+
+---
+
+### Firmware notes
+
+| Firmware | Channel type | Verified in production |
+|----------|--------------|------------------------|
+| AxeOS (Bitaxe) | extended | ✅ BTC, BCH |
+| NerdQAxe firmware | extended | ✅ BTC |
+| Braiins OS+ (Antminer) | standard | ✅ BTC, BCH |
+
+**Where the authority key goes depends on the firmware:**
+
+- **AxeOS and NerdQAxe** — dedicated `SV2 Authority Pubkey` field
+- **Braiins OS+** — appended to the URL path:
+  `stratum2+tcp://eu-bch.solofury.com:7333/9c5s3n4RzRrDhzMBr3iSJsUfreSLPGiHkQyyzJjYAVWK9YWaZf7`
+
+A URL that looks correct but omits the key fails silently on Braiins: the handshake never completes and the pool shows as "dead".
+
+**Known display quirk on AxeOS with BCH:** AxeOS decodes the coinbase using Bitcoin conventions, so it displays the ticker as "BTC" and addresses in Base58 (`1...`) even on a BCH template. **Amounts and the payout split are correct** — only the displayed encoding is wrong. Reported upstream; the firmware authors closed the request, stating the project remains bitcoin-only.
+
+---
 
 ### Verifying you are on V2
 
