@@ -24,8 +24,9 @@ Each coin has **3 ports** for stratum failover. Configure your miner with all 3 
 | **BC2** | 8080 | 8081 | 8082 |
 | **BCH2** | 8585 | 8586 | 8587 |
 | **XEC** | 9090 | 9091 | 9092 |
+| **DGB** | 5050 | 5051 | 5052 |
 
-**TLS ports** are the plain port with a `1` prefix: BCH 7070 → `17070`, BTC 6060 → `16060`, BC2 8080 → `18080`, BCH2 8585 → `18585`, XEC 9090 → `19090`. See [TLS stratum](#tls-stratum) below.
+**TLS ports** are the plain port with a `1` prefix: BCH 7070 → `17070`, BTC 6060 → `16060`, BC2 8080 → `18080`, BCH2 8585 → `18585`, XEC 9090 → `19090`, DGB 5050 → `15050`. See [TLS stratum](#tls-stratum) below.
 
 **Stratum V2** on BTC uses dedicated ports `3333` and `3343`; on BCH ports `7333` and `7343`. See [Stratum V2](#stratum-v2) below.
 
@@ -40,6 +41,7 @@ Each coin has **3 ports** for stratum failover. Configure your miner with all 3 
 | BC2 | `stratum+tcp://bc2.solofury.com:8080` |
 | BCH2 | `stratum+tcp://bch2.solofury.com:8585` |
 | XEC | `stratum+tcp://xec.solofury.com:9090` |
+| DGB | `stratum+tcp://dgb.solofury.com:5050` |
 
 ### 🇺🇸 Seattle (USA West / Pacific Northwest)
 
@@ -50,6 +52,7 @@ Each coin has **3 ports** for stratum failover. Configure your miner with all 3 
 | BC2 | `stratum+tcp://pnw-bc2.solofury.com:8080` |
 | BCH2 | `stratum+tcp://pnw-bch2.solofury.com:8585` |
 | XEC | `stratum+tcp://pnw-xec.solofury.com:9090` |
+| DGB | `stratum+tcp://pnw-dgb.solofury.com:5050` |
 
 ### 🇩🇪 Frankfurt (Europe Continental)
 
@@ -60,6 +63,7 @@ Each coin has **3 ports** for stratum failover. Configure your miner with all 3 
 | BC2 | `stratum+tcp://eu-bc2.solofury.com:8080` |
 | BCH2 | `stratum+tcp://eu-bch2.solofury.com:8585` |
 | XEC | `stratum+tcp://eu-xec.solofury.com:9090` |
+| DGB | `stratum+tcp://eu-dgb.solofury.com:5050` |
 
 ### 🇬🇧 London (United Kingdom)
 
@@ -70,6 +74,7 @@ Each coin has **3 ports** for stratum failover. Configure your miner with all 3 
 | BC2 | `stratum+tcp://uk-bc2.solofury.com:8080` |
 | BCH2 | `stratum+tcp://uk-bch2.solofury.com:8585` |
 | XEC | `stratum+tcp://uk-xec.solofury.com:9090` |
+| DGB | `stratum+tcp://uk-dgb.solofury.com:5050` |
 
 ### 🇮🇱 Tel Aviv (Middle East)
 
@@ -80,6 +85,7 @@ Each coin has **3 ports** for stratum failover. Configure your miner with all 3 
 | BC2 | `stratum+tcp://me-bc2.solofury.com:8080` |
 | BCH2 | `stratum+tcp://me-bch2.solofury.com:8585` |
 | XEC | `stratum+tcp://me-xec.solofury.com:9090` |
+| DGB | `stratum+tcp://me-dgb.solofury.com:5050` |
 
 ### 🇿🇦 Johannesburg (Africa)
 
@@ -90,6 +96,7 @@ Each coin has **3 ports** for stratum failover. Configure your miner with all 3 
 | BC2 | `stratum+tcp://afr-bc2.solofury.com:8080` |
 | BCH2 | `stratum+tcp://afr-bch2.solofury.com:8585` |
 | XEC | `stratum+tcp://afr-xec.solofury.com:9090` |
+| DGB | `stratum+tcp://afr-dgb.solofury.com:5050` |
 
 ### 🇧🇷 São Paulo (Latin America)
 
@@ -100,6 +107,7 @@ Each coin has **3 ports** for stratum failover. Configure your miner with all 3 
 | BC2 | `stratum+tcp://lat-bc2.solofury.com:8080` |
 | BCH2 | `stratum+tcp://lat-bch2.solofury.com:8585` |
 | XEC | `stratum+tcp://lat-xec.solofury.com:9090` |
+| DGB | `stratum+tcp://lat-dgb.solofury.com:5050` |
 
 ### 🇸🇬 Singapore (Asia Southeast)
 
@@ -110,6 +118,7 @@ Each coin has **3 ports** for stratum failover. Configure your miner with all 3 
 | BC2 | `stratum+tcp://asia-bc2.solofury.com:8080` |
 | BCH2 | `stratum+tcp://asia-bch2.solofury.com:8585` |
 | XEC | `stratum+tcp://asia-xec.solofury.com:9090` |
+| DGB | `stratum+tcp://asia-dgb.solofury.com:5050` |
 
 ### 🇯🇵 Tokyo (Asia East)
 
@@ -120,6 +129,7 @@ Each coin has **3 ports** for stratum failover. Configure your miner with all 3 
 | BC2 | `stratum+tcp://jp-bc2.solofury.com:8080` |
 | BCH2 | `stratum+tcp://jp-bch2.solofury.com:8585` |
 | XEC | `stratum+tcp://jp-xec.solofury.com:9090` |
+| DGB | `stratum+tcp://jp-dgb.solofury.com:5050` |
 
 ## Choosing your nearest region
 
@@ -177,6 +187,7 @@ TLS ports are the plain port with a `1` prefix:
 | **BC2** | 8080 / 8081 / 8082 | 18080 / 18081 / 18082 |
 | **BCH2** | 8585 / 8586 / 8587 | 18585 / 18586 / 18587 |
 | **XEC** | 9090 / 9091 / 9092 | 19090 / 19091 / 19092 |
+| **DGB** | 5050 / 5051 / 5052 | 15050 / 15051 / 15052 |
 
 Example:
 

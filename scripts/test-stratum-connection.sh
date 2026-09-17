@@ -2,12 +2,12 @@
 # test-stratum-connection.sh
 #
 # Test SoloFury stratum endpoint connectivity, latency, and response.
-# Tries all 9 regions × 5 coins = 45 endpoints (or filter by region/coin).
+# Tries all 9 regions × 6 coins = 54 endpoints (or filter by region/coin).
 #
 # Usage:
 #   ./test-stratum-connection.sh                    # test all 45 endpoints
 #   ./test-stratum-connection.sh --coin bch         # only BCH (9 regions)
-#   ./test-stratum-connection.sh --region eu        # only Frankfurt (5 coins)
+#   ./test-stratum-connection.sh --region eu        # only Frankfurt (6 coins)
 #   ./test-stratum-connection.sh --coin bch --region eu  # single endpoint
 #
 # Output: timing + connection status for each endpoint.
@@ -29,6 +29,7 @@ declare -A COIN_PORTS=(
   [bc2]=8080
   [bch2]=8585
   [xec]=9090
+  [dgb]=5050
 )
 
 declare -A REGION_PREFIXES=(

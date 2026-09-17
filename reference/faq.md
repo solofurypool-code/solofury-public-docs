@@ -128,9 +128,13 @@ Three families, as of August 2026:
 
 You do not need new hardware. V2 is a firmware capability — the ASIC never changes.
 
-### Why is Stratum V2 BTC only?
+### Which chains support Stratum V2?
 
-The V2 stack talks to the node through Bitcoin Core's IPC mining interface. No other SHA-256 chain implementation currently exposes an equivalent — not Bitcoin Cash Node, not Bitcoin ABC, not the BC2 or BCH2 daemons. BCH, BC2, BCH2 and XEC remain on Stratum V1 with full version-rolling and AsicBoost support.
+**BTC and BCH.** BTC since 24 August 2026, BCH since 5 September 2026 — both across all nine regions.
+
+BCH runs SoloFury's own SV2 implementation, built natively into the pool engine: no translation proxy, no node patch, and no dependency on Bitcoin Core's IPC interface (that interface only serves the Job Declaration path, which SoloFury does not offer on either chain). A pool-side SV2 server needs a block template and a new-block notification — both provided by Bitcoin Cash Node.
+
+BC2, BCH2 and DGB remain on Stratum V1, with full version-rolling and AsicBoost support. XEC likewise. Extending V2 to them is an engineering question, not a protocol limitation.
 
 ### I configured V2 but my miner still says V1
 
