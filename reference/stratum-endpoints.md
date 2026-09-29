@@ -9,7 +9,7 @@
 ```
 
 Where:
-- **Region prefix** is `eu-`, `asia-`, `jp-`, `pnw-`, `uk-`, `me-`, `afr-`, `lat-`, or empty (= Atlanta, USA East)
+- **Region prefix** is `eu-`, `asia-`, `jp-`, `pnw-`, `uk-`, `me-`, `afr-`, `lat-`, or empty (= Atlanta, USA East; `us-` also works)
 - **Coin** is `bch`, `btc`, `bc2`, `bch2`, or `xec`
 - **Port** varies by coin (see below)
 
@@ -215,6 +215,18 @@ Stratum V2 is encrypted end-to-end with the Noise protocol — the same cryptogr
 | BCH | 5 September 2026 | `7333` | `7343` | SoloFury's own implementation |
 
 > ⚠️ **The authority public key is different on each chain.** Using the BTC key on BCH fails the handshake — silently, on some firmware.
+
+### Connecting by firmware
+
+- **AxeOS 2.14+ (Bitaxe) and NerdQAxe 1.0.37+:** select *Stratum V2* in the pool settings, then enter **host and port only, without** the `stratum2+tcp://` prefix — for example host `eu-bch.solofury.com`, port `7333`.
+- **Braiins OS+:** use the full URL with the chain's authority key:
+
+```
+stratum2+tcp://eu-btc.solofury.com:3333/9cLif4sCxvAz7FBP7GPvYG8Mv586ZhdgNbn3f4PsrM56gboSZEp
+stratum2+tcp://eu-bch.solofury.com:7333/9c5s3n4RzRrDhzMBr3iSJsUfreSLPGiHkQyyzJjYAVWK9YWaZf7
+```
+
+The per-region tables below use the `stratum2+tcp://` form so every endpoint is written out in full.
 
 ---
 
