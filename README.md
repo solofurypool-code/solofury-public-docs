@@ -28,7 +28,7 @@ Solo mining means **one miner wins the entire block reward** when a block is fou
 
 ### Why multi-coin matters
 
-Most solo mining pools support a single coin (typically BTC). SoloFury is among the few production-grade solo pools that supports **5 SHA-256 cryptocurrencies natively** with dedicated stratum endpoints for each. This lets miners switch between coins by simply changing the stratum URL — same hardware, same wallet (per coin), same worker configuration. When BTC odds feel out of reach with a Bitaxe, you can switch to BC2 or XEC and find blocks in days instead of decades, without buying any new hardware.
+Most solo mining pools support a single coin (typically BTC). SoloFury is among the few production-grade solo pools that supports **6 SHA-256 cryptocurrencies natively** with dedicated stratum endpoints for each. This lets miners switch between coins by simply changing the stratum URL — same hardware, same wallet (per coin), same worker configuration. When BTC odds feel out of reach with a Bitaxe, you can switch to BC2 or XEC and find blocks in days instead of decades, without buying any new hardware.
 
 ---
 
@@ -38,7 +38,7 @@ SoloFury operates **9 stratum server regions** across 5 continents:
 
 | Region | Location | Country | Hostname Prefix |
 |--------|----------|---------|-----------------|
-| 🇺🇸 USA East | Atlanta, GA | United States | (default, no prefix) |
+| 🇺🇸 USA East | Atlanta, GA | United States | (default, no prefix) or `us-` |
 | 🇺🇸 USA West / Pacific Northwest | Seattle, WA | United States | `pnw-` |
 | 🇩🇪 Europe Continental | Frankfurt | Germany | `eu-` |
 | 🇬🇧 United Kingdom | London | United Kingdom | `uk-` |
@@ -92,7 +92,7 @@ Username: bitcoincash:qpyouraddressgoeshereexamplenotvalid12345.bitaxe1
 Password: x
 ```
 
-Mining BTC with V2-capable firmware? Use `stratum2+tcp://eu-btc.solofury.com:3333` instead — see [Stratum V2](#stratum-v2) below.
+Mining BTC or BCH with V2-capable firmware? See [Stratum V2](#stratum-v2) below: BTC on ports 3333/3343, BCH on ports 7333/7343.
 
 See hardware-specific setup guides:
 
@@ -141,13 +141,27 @@ No subscription, no premium tier, no ads. Most solo pools either don't offer thi
 
 SoloFury has served **Stratum V2** in production since 24 August 2026, across all nine regions — one of the very few solo pools to offer it at all.
 
-- **Ports 3333** (standard) and **3343** (high-difficulty, S21/S23 class), on the same hosts as V1
+- **BTC: ports 3333** (standard) and **3343** (high-difficulty, S21/S23 class) · **BCH: ports 7333** (standard) and **7343** (high-difficulty), on the same hosts as V1
 - **Noise-encrypted end-to-end** — the pool's authority public key lets your miner verify cryptographically that it is really talking to SoloFury, the same trust model as an SSH host key
 - **Coinbase verification from your own hardware** — with an extended channel and coinbase decoding enabled, the miner displays the block outputs *before* hashing them, so you can confirm the 99% is addressed to your wallet rather than take our word for it
 
 V2 and V1 share the same hosts, so a mixed fleet points at one address with nothing to reconfigure.
 
-**V2 is BTC only.** The stack talks to the node through Bitcoin Core's IPC mining interface, and no other SHA-256 chain implementation currently exposes an equivalent. BCH, BC2, BCH2 and XEC remain on Stratum V1 with full version-rolling support.
+**V2 runs on BTC and BCH**, each with its own authority key:
+
+| Chain | Ports | Authority public key |
+|---|---|---|
+| BTC | 3333 · 3343 | `9cLif4sCxvAz7FBP7GPvYG8Mv586ZhdgNbn3f4PsrM56gboSZEp` |
+| BCH | 7333 · 7343 | `9c5s3n4RzRrDhzMBr3iSJsUfreSLPGiHkQyyzJjYAVWK9YWaZf7` |
+
+BC2, BCH2, XEC and DGB remain on Stratum V1 (plain TCP or TLS) with full version-rolling support.
+
+**How to connect:** on **AxeOS** and **NerdQAxe**, select Stratum V2 in the pool settings, then enter host and port only, without a URL prefix (for example host `eu-bch.solofury.com`, port `7333`). On **Braiins OS+**, put the key in the URL:
+
+```
+stratum2+tcp://eu-btc.solofury.com:3333/9cLif4sCxvAz7FBP7GPvYG8Mv586ZhdgNbn3f4PsrM56gboSZEp
+stratum2+tcp://eu-bch.solofury.com:7333/9c5s3n4RzRrDhzMBr3iSJsUfreSLPGiHkQyyzJjYAVWK9YWaZf7
+```
 
 Requires firmware with native V2 support — **Braiins OS+ 26.07+**, **AxeOS 2.14+**, or **NerdQAxe firmware 1.0.37+**. Stock Bitmain, stock WhatsMiner, VNish and LuxOS are V1-only, including the S21 and S23.
 
@@ -164,7 +178,7 @@ All six coins and all nine regions accept **TLS-encrypted stratum** connections.
 SoloFury's dashboard tracks miner milestones across multiple dimensions:
 
 - **First share submitted** — celebrate the start of your mining journey
-- **Best share difficulty** — track your luckiest share ever (your closest call to a block)
+- **Best share difficulty** — the highest-difficulty share each worker has submitted so far
 - **Longest mining streak** — uptime tracking across days, weeks, months
 - **Blocks found** — historical record of every block won
 
@@ -174,7 +188,7 @@ These per-wallet achievements add a meaningful long-term progression layer to so
 
 SoloFury accepts connections from major hashrate rental marketplaces including [NiceHash](https://nicehash.com) and [Mining Rig Rentals (MRR)](https://miningrigrentals.com). This makes it possible to spike effective hashrate temporarily during favorable network conditions (e.g., difficulty drops on smaller chains) without permanent hardware investment.
 
-See [SoloFury Blog: MRR Hashrate Rental for Solo Mining](https://solofury.com/blog/mrr-hashrate-rental/) for strategy and ROI math.
+See the [SoloFury blog](https://solofury.com/blog/) for hashrate-rental strategy and ROI math.
 
 ## Documentation Index
 
@@ -203,10 +217,12 @@ See [SoloFury Blog: MRR Hashrate Rental for Solo Mining](https://solofury.com/bl
 
 Unlike custodial mining pools where payouts depend on trust in the operator, SoloFury's payout mechanism is **directly verifiable on the blockchain**.
 
-Every block mined by SoloFury produces a coinbase transaction with exactly **2 outputs**:
+Every block mined by SoloFury pays the reward inside the coinbase transaction itself:
 
-- **Output 0** — solver wallet (99% of block reward)
-- **Output 1** — pool fee wallet (1% of block reward)
+- **Solver output** — the miner's wallet (99% of block reward)
+- **Pool fee output** — SoloFury's fee wallet (1% of block reward)
+
+Chains with SegWit also carry the standard zero-value witness-commitment output, and on eCash (XEC) the outputs required by consensus are added as the protocol specifies.
 
 You can audit any SoloFury-mined block on any block explorer to confirm the fee split. There is:
 
@@ -279,7 +295,7 @@ V2 handshake messages are larger than V1's and can fragment on network paths wit
 
 ## Trust Signals
 
-- ✅ **1% fee verifiable on-chain** — every SoloFury block has a 2-output coinbase: 99% solver, 1% pool. Block [948592](https://blockchair.com/bitcoin-cash/block/948592) is one such example.
+- ✅ **1% fee verifiable on-chain** — every SoloFury block pays 99% to the solver and 1% to the pool directly in the coinbase. Block [948592](https://blockchair.com/bitcoin-cash/block/948592) is one such example.
 - ✅ **No custody** — block rewards go directly to your wallet via coinbase, never touching pool wallets
 - ✅ **Transparent operator** — based in Rome, Italy. Direct contact via [solofury.com/contact](https://solofury.com/contact/)
 - ✅ **MiningPoolStats listing** with full block history
