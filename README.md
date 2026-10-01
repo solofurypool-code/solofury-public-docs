@@ -24,7 +24,7 @@ Solo mining means **one miner wins the entire block reward** when a block is fou
 - ✅ **No registration, no custody, no KYC** — your wallet address is your account
 - ✅ **9 global stratum regions** — sub-50ms latency from most populated regions worldwide
 - ✅ **Stratum V2 in production on BTC and BCH** — encrypted end-to-end, coinbase verifiable from your own miner
-- ✅ **In development since 2024, publicly launched January 2026** — production-tested, transparent operator
+- ✅ **Launched January 2026** — production-tested, transparent operator
 
 ### Why multi-coin matters
 
@@ -297,7 +297,7 @@ V2 handshake messages are larger than V1's and can fragment on network paths wit
 
 - ✅ **1% fee verifiable on-chain** — every SoloFury block pays 99% to the solver and 1% to the pool directly in the coinbase. Block [948592](https://blockchair.com/bitcoin-cash/block/948592) is one such example.
 - ✅ **No custody** — block rewards go directly to your wallet via coinbase, never touching pool wallets
-- ✅ **Transparent operator** — based in Rome, Italy. Direct contact via [solofury.com/contact](https://solofury.com/contact/)
+- ✅ **Transparent operator** — Roland, individual operator based in Rome, Italy. About: [solofury.com/about](https://solofury.com/about/) · Legal notice: [solofury.com/legal](https://solofury.com/legal/) · Direct contact via [solofury.com/contact](https://solofury.com/contact/)
 - ✅ **MiningPoolStats listing** with full block history
 - ✅ **Wikidata entity** [Q140569039](https://www.wikidata.org/wiki/Q140569039) — verifiable knowledge-graph identity
 - ✅ **Open source upstream** — all stratum code derived from publicly available [skaisser/ckpool](https://github.com/skaisser/ckpool) fork and [blitzpool](https://blitzpool.yourdevice.ch/) for Stratum V2
